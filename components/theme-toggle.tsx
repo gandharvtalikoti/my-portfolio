@@ -1,30 +1,38 @@
-import { useTheme } from "next-themes";
-import React, { useEffect, useState } from "react";
-import { Button } from "./ui/button";
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+'use client'
 
-export default function ThemeToggle() {
-  const { setTheme, resolvedTheme } = useTheme();
-  const [mount, setMount] = useState(false);
+import { useEffect, useState } from 'react'
+import { useTheme } from 'next-themes'
+
+import { Button } from '@/components/ui/button'
+import { MoonIcon, SunIcon } from '@radix-ui/react-icons'
+
+export function ThemeToggle() {
+  const { setTheme, resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMount(true);
-  }, []);
-  if (!mount) {
-    return null;
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
   }
 
   return (
     <Button
-      size="sm"
-      value="ghost"
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      size='sm'
+      variant='ghost'
+      onClick={() => {
+        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
+      }}
     >
-      {resolvedTheme === "dark" ? (
-        <SunIcon className="size-4 text-orange-300" />
+      {resolvedTheme === 'dark' ? (
+        <SunIcon className='size-4 text-orange-300' />
       ) : (
-        <MoonIcon className="size-4 text-sky-950" />
+        <MoonIcon className='size-4 text-sky-950' />
       )}
+
+      <span className='sr-only'>Toggle theme</span>
     </Button>
-  );
+  )
 }
